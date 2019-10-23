@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import VueFire from 'vuefire'
+import { firestorePlugin } from 'vuefire'
 import firebase from 'firebase/app'
 import "firebase/auth"
 import "firebase/firestore"
 
 // プラグインを使うためのメソッド
-Vue.use(VueFire)
+Vue.use(firestorePlugin)
 
 // Firebase設定データ
 const config = {
@@ -20,7 +20,10 @@ const config = {
 };
 // Firebase初期化
 const firebaseApp = firebase.initializeApp(config);
+export default firebase;
+// FirebaseAuth設定
+export const auth = firebaseApp.auth()
 // Firestore設定
-const db = firebaseApp.firestore()
+export const db = firebaseApp.firestore()
 // Timestampクラスに変換させるオプション
 db.settings({ timestampsInSnapshots: true })

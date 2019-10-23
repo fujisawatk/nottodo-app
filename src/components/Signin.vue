@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from '@/plugins/firebase';
+import { auth } from '@/plugins/firebase';
 
 export default {
   name: "Signin",
@@ -29,10 +29,8 @@ export default {
   methods: {
     // ログインボタンが押された時のイベント処理
     signIn: function() {
-      firebase
-        .auth()
-        // emailとpasswordに関連づけられたアカウントでログインするメソッド
-        .signInWithEmailAndPassword(
+      // emailとpasswordに関連づけられたアカウントでログインするメソッド
+      auth.signInWithEmailAndPassword(
           this.email,
           this.password
         )
@@ -49,9 +47,7 @@ export default {
     // googleでログインするときのイベント処理
     signInWithGoogle: function() {
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
+      auth.signInWithPopup(provider)
         .then(user => {
           this.$router.push("/");
         })
