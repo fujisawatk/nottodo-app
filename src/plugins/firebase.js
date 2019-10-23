@@ -1,6 +1,11 @@
+import Vue from 'vue'
+import VueFire from 'vuefire'
 import firebase from 'firebase/app'
 import "firebase/auth"
 import "firebase/firestore"
+
+// プラグインを使うためのメソッド
+Vue.use(VueFire)
 
 // Firebase設定データ
 const config = {
