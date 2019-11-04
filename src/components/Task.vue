@@ -33,15 +33,13 @@
 </template>
 
 <script>
+import { db } from '@/plugins/firebase';
 
 export default {
   name: "Task",
   data() {
     return {
-      lists: [
-        {id: "1", title: "Youtubeは一日1時間にする！！", isCompleted: false },
-        {id: "2", title: "ゲームやめる！！", isCompleted: true }
-        ] 
+      lists: [] 
     };
   },
   methods: {
@@ -51,6 +49,20 @@ export default {
         return list.id != id
       })
     }
+  },
+  created(){
+    // firestoreのlistsテーブルからデータを取得
+    db.collection("lists")
+      .get()
+      .then(snapshot => {
+        // 取得したデータの配列を一つずつ実行
+        snapshot.forEach(doc => {
+          let list = doc.data()
+          list.id = doc.id
+          // dataオプションの配列listsに追加
+          this.lists.push(list)
+        })
+      })
   }
 }
 
