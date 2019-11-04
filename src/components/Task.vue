@@ -6,9 +6,9 @@
       <div class="header light-blue darken-2 white-text">
         <span>NotToDo List</span>
       </div>
-      <div class="item">
-        <input type="checkbox" class="filled-in" checked="checked" />
-        <span id="text">Youtubeは一日1時間にする！！</span>
+      <div class="item" v-for="list in lists" :key="list.id">
+        <input type="checkbox" class="filled-in" :checked="list.isCompleted" />
+        <span id="text">{{ list.title }}</span>
         <div class="right">
           <i class="material-icons small">edit</i>
           <i class="material-icons small">delete</i>
@@ -31,6 +31,22 @@
 
   </div>
 </template>
+
+<script>
+
+export default {
+  name: "Task",
+  data() {
+    return {
+      lists: [
+        {title: "Youtubeは一日1時間にする！！", isCompleted: false },
+        {title: "ゲームやめる！！", isCompleted: true }
+        ] 
+    };
+  },
+}
+
+</script>
 
 <style>
 .todo-list{
