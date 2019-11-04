@@ -44,9 +44,14 @@ export default {
   },
   methods: {
     delList(id){
-      // クリックされたidの要素以外の要素で、新しい配列を作る処理
-      this.lists = this.lists.filter(list => {
-        return list.id != id
+      // firestoreから選択されたidのデータを削除
+      db.collection("lists").doc(id).delete()
+        // 成功時
+        .then(() => {
+          // 削除されたidのデータ以外のデータで、新たにdataオプションの配列を作る
+          this.lists = this.lists.filter(list => {
+          return list.id != id
+        })
       })
     }
   },
