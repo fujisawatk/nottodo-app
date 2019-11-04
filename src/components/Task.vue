@@ -22,9 +22,10 @@
         <div class="row">
           <div class="input-field" id="input">
             <i class="material-icons prefix">message</i>
-            <textarea class="materialize-textarea" id="textarea" placeholder="やらないこと"></textarea>
-            <input type="submit" class="btn col s1 light-blue darken-2" placeholder="送信">
+            <textarea class="materialize-textarea" id="textarea" placeholder="やらないこと" v-model="title"></textarea>
+            <input type="submit" class="btn col s1 light-blue darken-2" placeholder="送信" @click.prevent="addList()">
           </div>
+          <p class="error">{{ error }}</p>
         </div>
       </form>
     </div>
@@ -39,7 +40,10 @@ export default {
   name: "Task",
   data() {
     return {
-      lists: [] 
+      lists: [],
+      error: "",
+      title: "",
+
     };
   },
   methods: {
@@ -53,8 +57,39 @@ export default {
           return list.id != id
         })
       })
+    },
+
+    addList(){
+      if(this.title){
+        this.error = ""
+        // firestoreのlistsテーブルにデータ追加
+        db.collection("lists").add({
+          title: this.title,
+          isCompleted: false
+        }).then(() => {
+          // リストを更新するため配列リセット
+          this.lists = []
+          // firestoreのlistsテーブルからデータを再取得
+          db.collection("lists")
+            .get()
+            .then(snapshot => {
+              snapshot.forEach(doc => {
+                let list = doc.data()
+                list.id = doc.id
+                this.lists.push(list)
+                // 入力欄リセット
+                this.title = ""
+              })
+            })
+        }).catch((err) => {
+          console.log(err)
+        })
+      } else {
+        this.error = "項目を入力してください"
+      }
     }
   },
+
   created(){
     // firestoreのlistsテーブルからデータを取得
     db.collection("lists")
@@ -109,7 +144,11 @@ export default {
   font-size: 1.5em;
 }
 #textarea:focus {
-     border-bottom: 1px solid #0288d1;
-     box-shadow: 0 1px 0 0 #0288d1;
+  border-bottom: 1px solid #0288d1;
+  box-shadow: 0 1px 0 0 #0288d1;
+}
+.error{
+  color: red;
+  margin-left: 3em;
 }
 </style>
