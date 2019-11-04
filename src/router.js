@@ -3,8 +3,7 @@ import Router from 'vue-router'
 import Task from '@/components/Task.vue'
 import Signup from '@/components/Signup'
 import Signin from '@/components/Signin'
-import firebase from "firebase/app";
-import "firebase/auth";
+import { auth } from '@/plugins/firebase'
 
 
 Vue.use(Router)
@@ -44,7 +43,7 @@ router.beforeEach((to, from, next)=>{
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth){
     // ユーザー認証されているかを確認するメソッド
-    firebase.auth().onAuthStateChanged(function(user){
+    auth.onAuthStateChanged(function(user){
       if(user){
         next()
       }else{

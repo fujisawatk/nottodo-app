@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
+import { auth } from '@/plugins/firebase';
 
 export default {
   name: "Signup",
@@ -27,10 +26,8 @@ export default {
   methods: {
     // 登録ボタンが押された時のイベント処理
     signUp: function() {
-      firebase
-        .auth()
-        // emailとpasswordに関連づけられたアカウントを作成するメソッド
-        .createUserWithEmailAndPassword(
+      // emailとpasswordに関連づけられたアカウントを作成するメソッド
+      auth.createUserWithEmailAndPassword(
           this.email,
           this.password
         )
