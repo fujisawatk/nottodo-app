@@ -6,8 +6,11 @@
       <div class="header light-blue darken-2 white-text">
         <span>NotToDo List</span>
       </div>
-      <div class="item" v-for="list in lists" :key="list.id">
-        <input type="checkbox" class="filled-in" :checked="list.isCompleted" />
+      <div class="item" v-for="list in lists" :key="list.id" :class = "{fade:list.isCompleted}">
+        <label>
+          <input type="checkbox" class="filled-in" :checked="list.isCompleted" @change="checkList(list.id, $event)" />
+          <span></span>
+        </label>
         <span id="text">{{ list.title }}</span>
         <div class="right">
           <i class="material-icons small">edit</i>
@@ -87,8 +90,19 @@ export default {
       } else {
         this.error = "項目を入力してください"
       }
+    },
+    checkList(id, e){
+      console.log(id)
+      let isChecked = e.target.checked;
+      console.log(isChecked)
+      db.collection("lists")
+        .doc(id)
+        .update({
+          isCompleted: isChecked
+        });
     }
   },
+  
 
   created(){
     // firestoreのlistsテーブルからデータを取得
