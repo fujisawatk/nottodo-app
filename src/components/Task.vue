@@ -11,7 +11,7 @@
         <span id="text">{{ list.title }}</span>
         <div class="right">
           <i class="material-icons small">edit</i>
-          <i class="material-icons small">delete</i>
+          <i class="material-icons small" @click="delList(list.id)">delete</i>
         </div>
       </div>
     </div>
@@ -39,11 +39,19 @@ export default {
   data() {
     return {
       lists: [
-        {title: "Youtubeは一日1時間にする！！", isCompleted: false },
-        {title: "ゲームやめる！！", isCompleted: true }
+        {id: "1", title: "Youtubeは一日1時間にする！！", isCompleted: false },
+        {id: "2", title: "ゲームやめる！！", isCompleted: true }
         ] 
     };
   },
+  methods: {
+    delList(id){
+      // クリックされたidの要素以外の要素で、新しい配列を作る処理
+      this.lists = this.lists.filter(list => {
+        return list.id != id
+      })
+    }
+  }
 }
 
 </script>
