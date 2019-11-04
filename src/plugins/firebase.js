@@ -25,5 +25,3 @@ export default firebase;
 export const auth = firebaseApp.auth()
 // Firestore設定
 export const db = firebaseApp.firestore()
-// Timestampクラスに変換させるオプション
-db.settings({ timestampsInSnapshots: true })
