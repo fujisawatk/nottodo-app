@@ -6,6 +6,7 @@
       </router-link>
 
       <ul class="right hide-on-med-and-down">
+        <li><router-link to="/dailychart">グラフ</router-link></li>
         <li><router-link to="/signin">ログイン</router-link></li>
         <li><router-link to="/signup">サインアップ</router-link></li>
       </ul>

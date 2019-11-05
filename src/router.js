@@ -4,6 +4,7 @@ import Task from '@/components/Task.vue'
 import Signup from '@/components/Signup'
 import Signin from '@/components/Signin'
 import { auth } from '@/plugins/firebase'
+import DailyChart from '@/components/DailyChart'
 
 
 Vue.use(Router)
@@ -33,6 +34,11 @@ let router = new Router({
       path: '/signin',
       name: 'Signin',
       component: Signin
+    },
+    {
+      path: '/dailychart',
+      name: 'dailychart',
+      component: DailyChart
     }
   ]
 })
